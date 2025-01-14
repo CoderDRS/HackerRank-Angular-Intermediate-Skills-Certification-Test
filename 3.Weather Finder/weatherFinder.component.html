@@ -1,0 +1,75 @@
+<div class="weather-data layout-column align-items-center mt-50">
+    <section class="layout-row align-items-center justify-content-center">
+        <!-- Use a template reference variable to capture the input value -->
+        <input
+          type="text"
+          class="large ml-30"
+          placeholder="Dallas"
+          data-test-id="app-input"
+          #inputRef
+        />
+        <!-- Pass the input value to onSearch when clicked -->
+        <button
+          class=""
+          data-test-id="submit-button"
+          (click)="onSearch(inputRef.value)"
+        >Search</button>
+    </section>
+  
+    <section class="mt-20 layout-row align-items-center justify-content-center">
+      <div class="card outlined">
+  
+        <!-- Weather details block - shown only if we have data -->
+        <div
+          data-test-id="weather-details"
+          class="card-text pt-10 layout-row justify-content-between"
+          *ngIf="showWeatherDetails && weatherDetails"
+        >
+          <div class="mt-20 outlined">
+            <!-- If temperature >= 20, show sunny icon, else show cold icon -->
+            <i
+              data-test-id="icon-sunny"
+              class="material-icons"
+              *ngIf="temperatureValue >= 20"
+            >
+              wb_sunny
+            </i>
+            <i
+              data-test-id="icon-cold"
+              class="material-icons"
+              *ngIf="temperatureValue < 20"
+            >
+              ac_unit
+            </i>
+  
+            <!-- Show the temperature string from the API (e.g. "12 degree") -->
+            <span data-test-id="result-temperature" class="temperature">
+              {{ weatherDetails.weather }}
+            </span>
+          </div>
+  
+          <div class="mr-15 mb-15">
+            <!-- The wind value (e.g. "Wind: 2Kmph") -->
+            <div data-test-id="result-wind" class="mt-20">
+              {{ weatherDetails.status[0] }}
+            </div>
+            <!-- The humidity value (e.g. "Humidity: 5%") -->
+            <div data-test-id="result-humidity" class="mt-20">
+              {{ weatherDetails.status[1] }}
+            </div>
+          </div>
+        </div>
+  
+        <!-- "No Results Found" div - shown only if the API returns an empty array or error -->
+        <div
+          data-test-id="no-result"
+          class="layout-row justify-content-center align-items-center card-text"
+          *ngIf="showNoResults"
+        >
+          No Results Found
+        </div>
+  
+      </div>
+    </section>
+  </div>
+  
